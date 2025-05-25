@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Me - C.Madison's Blog Website</title>
+
+  <link rel="stylesheet" type="text/css" href="style-css">
+  </head>
+  <body>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      background: #f9fafc;
+      color: #333;
+    }
+    header {
+      background: #4a90e2;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(74,144,226,.3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+    }
+    nav {
+      margin-top: 0.6rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 500;
+      transition: opacity 0.3s ease;
+    }
+    nav a:hover {
+      opacity: 0.75;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto 4rem;
+      padding: 0 1rem;
+    }
+    section {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #ddd;
+    }
+    h2 {
+      color: #4a90e2;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      border-left: 5px solid #4a90e2;
+      padding-left: 0.5rem;
+      font-size: 1.75rem;
+    }
+    p {
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: #555;
+    }
+    .intro {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #222;
+      margin-bottom: 1rem;
+    }
+    .blog-posts article {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.3s ease;
+    }
+    .blog-posts article:hover {
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+    article h3 {
+      margin-top: 0;
+      color: #2b5dab;
+      font-weight: 600;
+    }
+    article time {
+      font-size: 0.9rem;
+      color: #888;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    footer {
+      background: #333;
+      color: #eee;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.9rem;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
+    }
+    /* Artworks gallery */
+    .artworks-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 15px;
+      margin-top: 1rem;
+    }
+    .artwork-item {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .artwork-item:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .artwork-item img {
+      width: 100%;
+      display: block;
+      height: 160px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+      transition: transform 0.3s ease;
+    }
+    .artwork-item:hover img {
+      transform: scale(1.05);
+    }
+    .artwork-caption {
+      padding: 0.8rem 1rem;
+      font-weight: 500;
+      color: #444;
+      font-size: 1rem;
+      text-align: center;
+    }
+    /* Achievements list */
+    .achievements-list {
+      list-style: inside disc;
+      color: #444;
+      font-weight: 400;
+      font-size: 1.1rem;
+    }
+    /* Lightbox modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+      transition: opacity 0.3s ease;
+    }
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      animation: zoomIn 0.3s ease;
+    }
+    @keyframes zoomIn {
+      from {transform: scale(0.7);}
+      to {transform: scale(1);}
+    }
+    .modal-caption {
+      margin: 1rem auto 2rem;
+      max-width: 90%;
+      text-align: center;
+      color: #ddd;
+      font-size: 1.1rem;
+      font-weight: 500;
+      user-select: none;
+    }
+    .modal-close {
+      position: fixed;
+      top: 30px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s ease;
+      z-index: 10000;
+    }
+    .modal-close:hover {
+      color: #bbb;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      nav a {
+        margin: 0 0.5rem;
+        font-size: 0.9rem;
+      }
+      main {
+        margin: 1.5rem auto 3rem;
+        padding: 0 0.5rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to My Blog</h1>
+    <nav>
+      <a href="#about">About Me</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#college">College Life</a>
+      <a href="#artworks">My Artworks</a>
+      <a href="#blog">My Blog</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <section id="about">
+      <h2>About Me</h2>
+      <p class="intro">Hi! I'm a student passionate about learning and growing every day. This blog is a place where I share my journey, interests, and experiences.</p>
+      <p>My name is Ciara Madison A. Salabit. I am currently pursuing my studies with great enthusiasm and dedication. I love exploring new technologies, creative pursuits, and pushing myself through challenges both academically and personally.</p>
+    </section>
+    <section id="achievements">
+      <h2>Achievements</h2>
+      <p>Throughout my academic and creative journey, I am proud of several accomplishments that reflect my dedication and passion:</p>
+      <ul class="achievements-list">
+        <li>Awarded "Best of Research" in my Senior High school for my awarded graduation.</li>
+        <li>Secured top 10 positions in a Classroom tops, demonstrating my hardworking.</li>
+        <li>Recognized for participation in the Social Media Card making Contest during the AngelNet Summit 2023 with my digital artwork.</li>
+        <li>Awarded "OJT" in my Senior High school for my awarded graduation.</li>
+        <li>Becoming a officer as secretary twice of year in my grade 11 and grade 12.</li>
+      </ul>
+    </section>
+    <section id="college">
+      <h2>College Life</h2>
+      <p>At college, I am studying BSIT, or Bachelor of Science in Information Technology. Being BSIT is my second choices because my first choice was become digital artist but my senior high school doesn't have one and so I take the course of BSIT. My performance project is an exciting opportunity for me to apply what I've learned and showcase my skills. Besides academics, I also have personal life where I have spend time with my friends to have bonding together and added to that I have amazing boyfriend who I love him very much that we attend in same school even we are busy to school but we able to have time to talk and spend time together. College life has taught me how to balance responsibilities while growing as a person and student.</p>
+    </section>
+    <section id="artworks">
+      <h2>My Artworks</h2>
+      <p>Art is a way for me to express my creativity and perspectives. Here are some highlights from my collection:</p>
+      <div class="artworks-gallery">
+        <div class="artwork-item" tabindex="0" aria-label="Artwork titled 'Howl's moving castle'">
+          <img src="file:///C:/Users/cmsal/Downloads/MADDIE'S%20FILES/clip%20studio%20paint%20arts/CIARA%20MADISON%20A.%20SALABIT.jpg" alt="Howl's moving castle with my OC." />
+          <div class="artwork-caption">Howl's movng castle - digital art</div>
+        </div>
+        <div class="artwork-item" tabindex="0" aria-label="Artwork titled 'Buger King logo'">
+          <img src="file:///C:/Users/cmsal/Downloads/MADDIE'S%20FILES/SALABIT,%20CIARA%20MADISON%20A.%20(BSIT%201C).jpg" alt="Buger King logo" />
+          <div class="artwork-caption">Buger King Logo - Logo design</div>
+        </div>
+        <div class="artwork-item" tabindex="0" aria-label="Artwork titled 'Stranger Things'">
+          <img src="file:///C:/Users/cmsal/Downloads/MADDIE'S%20FILES/stranger%20things%20nova%202%20with%20signature%20finally.jpg" alt="Stranger things fanart" />
+          <div class="artwork-caption">Stranger things - Digital art</div>
+        </div>
+        <div class="artwork-item" tabindex="0" aria-label="Artwork titled 'Spiderlily from spiderman multiverse'">
+          <img src="file:///C:/Users/cmsal/Downloads/THE%20SPIDER-LILY%20NOVA.jpg" alt="Spiderlily from spiderman multiverse" />
+          <div class="artwork-caption">Spiderman - Digital art</div>
+        </div>
+      </div>
+    </section>
+    <section id="blog">
+      <h2>My Blog</h2>
+      <div class="blog-posts">
+        <article>
+          <time datetime="2025-05-25">May 25, 2025</time>
+          <h3>Starting My Performance Project</h3>
+          <p>This project is a major milestone for me. I'm focusing on developing a personal website to showcase my skills and tell my story. It’s been fun to learn about web design, development, and writing engaging content.</p>
+        </article>
+        <article>
+          <time datetime="2025-05-25">May 25, 2025</time>
+          <h3>Balancing Personal and Study</h3>
+          <p>Managing college coursework along with personal life is challenging but rewarding. I’ve learned effective time management strategies that I want to share here as they might help others in similar situations.</p>
+        </article>
+        <article>
+          <time datetime="2025-05-25">May 25, 2025</time>
+          <h3>Why I Love Learning</h3>
+          <p>Learning is a continuous adventure. It keeps the mind sharp and opens doors. I believe embracing curiosity and persistence will guide me to reach my goals and make a positive impact.</p>
+        </article>
+      </div>
+    </section>
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <p>If you'd like to connect, collaborate or just say hello, feel free to reach out!</p>
+      <p>
+        Email: <a href="https://mail.google.com/mail/u/0/#inbox">cmsalabit@gmail.com</a> <br />
+      </p>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 Ciara Madison A. Salabit | BSIT 1C
+  </footer>
+
+   <script>
+    (function() {
+      const modal = document.getElementById('modal');
+      const modalImg = document.getElementById('modal-img');
+      const modalCaption = document.getElementById('modal-caption');
+      const modalClose = document.getElementById('modal-close');
+      let lastFocusedElement = null;
+      function openModal(img) {
+        lastFocusedElement = document.activeElement;
+        modal.style.display = 'block';
+        modalImg.src = img.dataset.full || img.src;
+        modalImg.alt = img.alt || '';
+        modalCaption.textContent = img.dataset.caption || '';
+        modal.focus();
+      }
+      function closeModal() {
+        modal.style.display = 'none';
+        modalImg.src = '';
+        modalCaption.textContent = '';
+        if(lastFocusedElement) {
+          lastFocusedElement.focus();
+        }
+      }
+      document.querySelectorAll('.artwork-item img').forEach(img => {
+        img.addEventListener('click', () => openModal(img));
+        img.addEventListener('keydown', e => {
+          if(e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModal(img);
+          }
+        });
+      });
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if(e.target === modal) {
+          closeModal();
+        }
+      });
+      document.addEventListener('keydown', e => {
+        if(e.key === 'Escape' && modal.style.display === 'block') {
+          closeModal();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+
